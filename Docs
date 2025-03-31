@@ -1,0 +1,114 @@
+1. INTRODUÇÃO
+O controle de riscos no ambiente de trabalho vem se tornando uma preocupação cada vez maior para empresas em todo o mundo, principalmente pelo aumento de acidentes que poderiam ser evitados com um monitoramento adequado. A Organização Internacional do Trabalho aponta que cerca de 2,3 milhões de pessoas morrem todos os anos por causa de acidentes e doenças relacionadas ao trabalho, sendo que muitos desses casos poderiam ser prevenidos com sistemas mais eficientes de identificação e gestão de riscos.
+No passado, a gestão de riscos no trabalho era feita usando processos manuais, como papéis e inspeções ocasionais, o que frequentemente causava demoras nas ações para corrigir ou prevenir problemas. Com os avanços tecnológicos, especialmente em smartphones e sistemas de localização, surgiu a chance de modernizar esse processo tão importante para a segurança dos trabalhadores.
+Estudos recentes, como o de Martins e colegas (2023), mostram que empresas que começaram a usar sistemas digitais para monitorar riscos conseguiram diminuir em até 65% o número de acidentes de trabalho. Além disso, pesquisas da ABNT indicam que o uso de tecnologias móveis para identificar e registrar condições perigosas aumenta significativamente o envolvimento dos funcionários nas políticas de segurança da empresa.
+Este projeto busca, portanto, criar uma solução tecnológica que permita identificar rapidamente, registrar com precisão e gerenciar com eficiência os riscos no ambiente de trabalho, usando aplicativos móveis integrados que aproveitam recursos modernos de localização e compartilhamento de informações em tempo real.
+
+2. JUSTIFICATIVA
+Nosso projeto se justifica pela necessidade urgente de modernizar como as empresas identificam e gerenciam riscos no ambiente de trabalho. Segundo dados do Ministério do Trabalho e Previdência, no Brasil, mais de 600 mil acidentes de trabalho são registrados por ano, gerando um custo aproximado de R$ 26 bilhões para o governo e as empresas. Estudos mostram que 80% desses acidentes poderiam ser evitados com sistemas eficientes de monitoramento e gestão de riscos.
+Atualmente, muitas empresas ainda usam métodos ultrapassados para registrar e acompanhar situações de risco, como formulários em papel e planilhas isoladas, que dificultam a comunicação rápida e a tomada de decisões. Essa defasagem tecnológica causa atrasos significativos entre identificar um risco e implementar ações para corrigi-lo, aumentando as chances de acidentes.
+Além disso, pesquisas feitas pela Fundacentro revelam que 67% dos funcionários não se sentem motivados a reportar condições inseguras por causa da burocracia e porque acreditam que suas notificações não vão resultar em ações concretas. Isso mostra a necessidade de um sistema que não apenas facilite o registro de riscos, mas também mostre de forma transparente como essas informações estão sendo gerenciadas e quais ações estão sendo tomadas.
+Com o uso cada vez maior de smartphones no ambiente de trabalho e a familiaridade dos funcionários com aplicativos, desenvolver uma solução móvel para controle de riscos representa uma oportunidade de transformar significativamente a cultura de segurança nas organizações, promovendo maior participação dos funcionários e eficiência na gestão de riscos.
+
+3. OBJETIVOS
+Objetivo Geral:
+Criar um sistema integrado de controle de riscos no ambiente de trabalho, formado por dois aplicativos móveis complementares, que permitam identificar, registrar, monitorar e gerenciar de forma eficiente situações de risco, ajudando a reduzir acidentes e promover um ambiente de trabalho mais seguro.
+Objetivos Específicos:
+
+Criar um aplicativo em Kotlin para que funcionários possam registrar riscos no ambiente de trabalho, usando recursos de foto e localização.
+Desenvolver um sistema de login seguro que garanta a identificação correta dos usuários ao registrar ocorrências.
+Implementar um sistema de localização preciso que permita associar os riscos identificados aos lugares específicos dentro da empresa.
+Construir um aplicativo em Flutter para que gestores possam visualizar e gerenciar os riscos reportados, usando interfaces intuitivas e mapas interativos.
+Criar um sistema para gerar relatórios periódicos que forneçam insights sobre áreas críticas e tendências de riscos.
+Desenvolver um mapa de calor baseado nas ocorrências registradas, facilitando a identificação visual de zonas críticas.
+Integrar os dois aplicativos a um banco de dados central que garanta a consistência e segurança das informações.
+Fazer testes de usabilidade com usuários finais para garantir que as soluções sejam fáceis de usar e efetivas.
+
+4. ESCOPO
+O Sistema de Controle de Riscos no Ambiente de Trabalho será composto por dois aplicativos móveis que trabalham juntos, visando facilitar a identificação, registro e gestão de situações de risco em ambientes de trabalho. O sistema vai beneficiar dois grupos principais: funcionários que trabalham em campo, que poderão reportar riscos de maneira rápida e simples, e gestores/profissionais de segurança do trabalho, que terão acesso a uma visão completa e geograficamente localizada dos riscos para tomar decisões.
+O primeiro aplicativo, desenvolvido em Kotlin, permitirá que os funcionários façam login com suas credenciais da empresa, identifiquem e registrem situações de risco através de uma interface fácil de usar, tirem fotos do local de risco e usem a localização para marcar com precisão onde está a ocorrência. As informações serão enviadas para um banco de dados central em tempo real.
+O segundo aplicativo, desenvolvido em Flutter, permitirá que gestores e profissionais de segurança acessem os dados registrados pelos funcionários, vejam um mapa interativo com os pontos de risco identificados (podendo filtrar por período, tipo de risco e área), gerem relatórios sobre as ocorrências e acompanhem as ações corretivas implementadas para cada situação reportada.
+As principais fontes de dados serão os próprios usuários, que fornecerão informações sobre os riscos identificados, e o GPS dos dispositivos, que fornecerá dados de localização. O sistema produzirá como principais resultados: registros detalhados de riscos, mapas de calor das áreas críticas e relatórios analíticos periódicos.
+Os principais processos que serão automatizados incluem: notificação de riscos, categorização automática por tipo e gravidade, alerta para gestores sobre novas ocorrências, geração programada de relatórios e acompanhamento do ciclo de vida de cada risco reportado, desde sua identificação até a resolução.
+
+5. NÃO ESCOPO
+Criação de versão web do sistema - o foco será exclusivamente nos aplicativos móveis.
+Integração direta com sistemas ERP ou outros softwares já existentes na empresa.
+Monitoramento automático através de sensores ou dispositivos IoT - o sistema dependerá do registro feito pelos funcionários.
+Implementação de módulo para gestão de equipamentos de proteção individual (EPIs).
+Desenvolvimento de funções de comunicação interna, como chat ou troca de mensagens entre usuários.
+Criação de módulos para treinamento ou capacitação em segurança do trabalho.
+Geração automática de documentos legais relacionados à segurança do trabalho (PPP, LTCAT, etc.).
+Implementação de recursos de inteligência artificial para prever riscos.
+Desenvolvimento de funcionalidades offline com sincronização posterior - o sistema precisará de conexão com internet para funcionar.
+Módulo para gerenciamento de incidentes e acidentes já ocorridos - o foco será na prevenção.
+
+6. Aplicativo 1: Aplicativo para Identificação e Registro de Riscos (Kotlin)
+Objetivo Principal
+Facilitar a notificação de condições de risco por parte dos colaboradores da empresa, permitindo o registro de riscos de forma simples e rápida através de dispositivos móveis.
+Objetivos Específicos
+Permitir que o colaborador registre eventuais riscos identificados, incluindo fotos do local
+Implementar um modelo de autenticação de usuários
+Utilizar geolocalização para associar o risco ao local exato dentro da organização/empresa
+
+6.1. Requisitos Funcionais
+RF01: Cadastro de usuários com informações básicas (nome, cargo, setor, foto)
+RF02: Login de usuários usando credenciais corporativas
+RF03: Registro de riscos identificados no ambiente de trabalho
+RF04: Captura de imagens do local de risco para inclusão no registro
+RF05: Geolocalização automática no momento do registro do risco
+RF06: Classificação de riscos quanto à natureza (físico, químico, ergonômico, biológico, etc)
+RF07: Indicação do nível de gravidade do risco (baixo, médio, alto)
+RF08: Descrição textual detalhada do risco identificado
+RF09: Histórico dos riscos registrados pelo usuário
+RF10: Notificação de confirmação ao usuário após registro do risco
+RF11: Visualização dos detalhes dos riscos registrados pelo usuário
+RF12: Edição de informações de perfil do usuário
+RF13: Mecanismo para recuperação de senha
+RF14: Funcionalidade de logout da aplicação
+RF15: Visualização do status atual dos riscos (em análise, em tratamento, resolvido)
+
+6.2. Requisitos Não Funcionais
+RNF01: Interface intuitiva e fácil de usar para usuários com pouca experiência tecnológica
+RNF02: Tempo de resposta não superior a 2 segundos para operações básicas
+RNF03: Criptografia de dados transmitidos entre aplicativo e servidor
+RNF04: Disponibilidade do sistema 24/7 com inatividade planejada inferior a 4 horas mensais
+RNF05: Prevenção de perda de dados com cópias temporárias locais
+RNF06: Compatibilidade com dispositivos Android a partir da versão 8.0 (Oreo)
+RNF07: Otimização do consumo de bateria, especialmente ao usar GPS e câmera
+RNF08: Feedback visual claro para todas as ações do usuário
+RNF09: Mecanismos seguros de autenticação, incluindo senhas fortes
+RNF10: Código organizado seguindo padrões de desenvolvimento Kotlin
+
+7. Aplicativo 2: Aplicativo para Gerenciamento de Riscos (Flutter)
+Objetivo Principal
+Oferecer uma visão geral e facilitada dos registros de riscos para gestores e responsáveis pela segurança do trabalho, permitindo monitorar riscos relatados, visualizar relatórios detalhados e acompanhar ações corretivas.
+Objetivos Específicos
+Gerar um mapa de riscos, identificando as principais áreas de risco com base nos registros com geolocalização
+Gerar relatórios periódicos sobre os riscos identificados
+
+7.1. Requisitos Funcionais
+RF01: Acesso de gestores com credenciais corporativas para visualizar riscos reportados
+RF02: Visualização em mapa de todos os riscos reportados para identificação de áreas críticas
+RF03: Filtros de riscos por período, tipo e área para análise de tendências específicas
+RF04: Mapa de calor para identificar zonas com maior concentração de problemas
+RF05: Geração de relatórios sobre riscos identificados para apresentações
+RF06: Atualização do status dos riscos para acompanhamento das ações corretivas
+RF07: Notificações sobre novos riscos reportados para ação rápida em casos graves
+RF08: Visualização de estatísticas sobre tipos de riscos mais comuns
+RF09: Atribuição de responsáveis para tratar cada risco reportado
+RF10: Adição de comentários e atualizações sobre ações tomadas para cada risco
+RF11: Definição de prazos para resolução de cada risco
+RF12: Comparação de dados de períodos diferentes para avaliação da eficácia das ações preventivas
+
+7.2. Requisitos Não Funcionais
+RNF01: Design responsivo para diferentes tamanhos de tela (smartphones e tablets)
+RNF02: Carregamento de mapas em no máximo 3 segundos mesmo com grande volume de dados
+RNF03: Controle de acesso baseado em perfis de usuário
+RNF04: Backup automático de dados a cada 24 horas
+RNF05: Compatibilidade com dispositivos iOS (versão 12+) e Android (versão 8.0+)
+RNF06: Geração de relatórios em no máximo 5 segundos
+RNF07: Suporte a pelo menos 100 usuários acessando simultaneamente
+RNF08: Curva de aprendizado menor que 30 minutos para usuários novos
+RNF09: Arquitetura modular seguindo padrões de desenvolvimento Flutter
+RNF10: Integração com APIs externas para funções de mapeamento e notificações
