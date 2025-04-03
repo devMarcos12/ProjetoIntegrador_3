@@ -13,6 +13,7 @@ Com o uso cada vez maior de smartphones no ambiente de trabalho e a familiaridad
 3. OBJETIVOS
 Objetivo Geral:
 Criar um sistema integrado de controle de riscos no ambiente de trabalho, formado por dois aplicativos móveis complementares, que permitam identificar, registrar, monitorar e gerenciar de forma eficiente situações de risco, ajudando a reduzir acidentes e promover um ambiente de trabalho mais seguro.
+
 Objetivos Específicos:
 
 Criar um aplicativo em Kotlin para que funcionários possam registrar riscos no ambiente de trabalho, usando recursos de foto e localização.
