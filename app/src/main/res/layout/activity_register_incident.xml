@@ -75,6 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter a Title"
+            android:inputType="text"
             android:textSize="15dp"
             android:background="@android:drawable/editbox_background"
             android:padding="12dp"

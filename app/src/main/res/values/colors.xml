@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="text_white">#FFFFFFFF</color>
     <color name="button_enabled">#FF000000</color>
+    <color name="button_disabled">#AAAAAA</color>
     <color name="help_text">#663C3C43</color>
     <color name="button_file">#FFFFFFFF</color>
 </resources>
