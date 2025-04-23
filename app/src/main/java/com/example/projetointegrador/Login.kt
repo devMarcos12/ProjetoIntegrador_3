@@ -16,16 +16,13 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // Inicializar Firebase Auth
         auth = FirebaseAuth.getInstance()
 
-        // Referências para os campos do layout
         val emailField = findViewById<EditText>(R.id.etEmail)
         val passwordField = findViewById<EditText>(R.id.etPassword)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val btnSignUp = findViewById<Button>(R.id.btnSignUp)
 
-        // Configurar o clique do botão de login
         btnLogin.setOnClickListener {
             val email = emailField.text.toString().trim()
             val password = passwordField.text.toString().trim()
@@ -38,7 +35,6 @@ class Login : AppCompatActivity() {
             loginUser(email, password)
         }
 
-        // Configurar o clique do botão de cadastro
         btnSignUp.setOnClickListener {
             val intent = Intent(this, Cadastro::class.java)
             startActivity(intent)
@@ -51,10 +47,9 @@ class Login : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show()
 
-                    // Redirecionar para a tela Register_Incident
                     val intent = Intent(this, Register_Incident::class.java)
                     startActivity(intent)
-                    finish() // Finalizar a tela de login
+                    finish()
                 } else {
                     Toast.makeText(this, "Erro no login: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
