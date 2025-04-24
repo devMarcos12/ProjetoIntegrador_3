@@ -32,27 +32,20 @@ class Login : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            loginUser(email, password)
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "Login realizado com sucesso", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
+                    } else {
+                        Toast.makeText(this, "Erro ao fazer login: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                    }
+                }
         }
 
         btnSignUp.setOnClickListener {
-            val intent = Intent(this, Cadastro::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, Cadastro::class.java))
         }
-    }
-
-    private fun loginUser(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show()
-
-                    val intent = Intent(this, Register_Incident::class.java)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    Toast.makeText(this, "Erro no login: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
-                }
-            }
     }
 }

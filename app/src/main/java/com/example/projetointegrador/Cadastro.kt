@@ -17,7 +17,6 @@ class Cadastro : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro)
 
-        // Inicializar Firebase Auth e Firestore(Db)
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
@@ -59,7 +58,6 @@ class Cadastro : AppCompatActivity() {
                         "Senha" to password
                     )
 
-                    // Salvar os dados no Banco de Dados do Firebase (Authentication != DB)
                     uid?.let {
                         db.collection("Usuarios").document(it).set(user)
                             .addOnSuccessListener {
@@ -67,11 +65,11 @@ class Cadastro : AppCompatActivity() {
                                 finish()
                             }
                             .addOnFailureListener { e ->
-                                Toast.makeText(this, "Erro ao salvar dados: ${e.message}", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, "Erro ao salvar dados: ${e.message}", Toast.LENGTH_LONG).show()
                             }
                     }
                 } else {
-                    Toast.makeText(this, "Erro no cadastro: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Erro no cadastro: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }
             }
     }
