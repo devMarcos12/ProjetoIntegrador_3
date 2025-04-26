@@ -6,6 +6,7 @@ import android.widget.Toast
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,8 @@ class ViewEventsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_view_events)
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.button_enabled)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.register_incident)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
