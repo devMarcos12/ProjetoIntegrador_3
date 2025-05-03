@@ -4,12 +4,15 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.location.Location
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import android.util.Base64
+import java.io.ByteArrayOutputStream
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -19,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import java.util.*
+
 
 class Register_Incident : AppCompatActivity() {
 
@@ -89,17 +93,30 @@ class Register_Incident : AppCompatActivity() {
         if (resultCode == RESULT_OK) {
             when (requestCode) {
                 PICK_IMAGE -> {
-                    selectedImageUri = data?.data.toString()
+                    val uri = data?.data
+                    val inputStream = contentResolver.openInputStream(uri!!)
+                    val bitmap = BitmapFactory.decodeStream(inputStream)
+                    imageBitmap = bitmap
+                    selectedImageUri = bitmapToBase64(bitmap) // Converte para Base64
                     btnUpload.text = "Image Selected"
                 }
                 TAKE_PHOTO -> {
-                    imageBitmap = data?.extras?.get("data") as? Bitmap
-                    if (imageBitmap != null) {
+                    val bitmap = data?.extras?.get("data") as? Bitmap
+                    if (bitmap != null) {
+                        imageBitmap = bitmap
+                        selectedImageUri = bitmapToBase64(bitmap) // Converte para Base64
                         btnUpload.text = "Image Selected"
                     }
                 }
             }
         }
+    }
+
+    private fun bitmapToBase64(bitmap: Bitmap): String {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+        val byteArray = byteArrayOutputStream.toByteArray()
+        return Base64.encodeToString(byteArray, Base64.DEFAULT)
     }
 
     private fun getCurrentLocation() {
@@ -164,7 +181,7 @@ class Register_Incident : AppCompatActivity() {
         val incident = hashMapOf(
             "titulo" to title,
             "descricao" to description,
-            "imagePath" to selectedImageUri, // Caminho da imagem selecionada
+            "imageBase64" to selectedImageUri, // Salva a imagem como Base64
             "timestamp" to System.currentTimeMillis(),
             "localizacao" to geoPoint
         )

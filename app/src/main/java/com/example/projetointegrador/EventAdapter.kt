@@ -3,8 +3,11 @@ package com.example.projetointegrador
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+
 
 class EventAdapter(
     private val events: List<Event>,
@@ -27,10 +30,19 @@ class EventAdapter(
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = events[position]
-        holder.imgEvent.setImageResource(event.imageResId)
+
+        // Exibir o Bitmap no ImageView
+        if (event.imageBitmap != null) {
+            holder.imgEvent.setImageBitmap(event.imageBitmap)
+        } else {
+            // Exibir uma imagem padrão caso o Bitmap seja nulo
+            holder.imgEvent.setImageResource(R.drawable.projetor)
+        }
+        // Configurar título e descrição
         holder.tvTitle.text = event.title
         holder.tvDescription.text = event.description
 
+        // Configurar os botões de editar e excluir
         holder.btnEdit.setOnClickListener { onEditClick(event) }
         holder.btnDelete.setOnClickListener { onDeleteClick(event) }
     }

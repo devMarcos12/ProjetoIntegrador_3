@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Base64
 
 class ViewEventsActivity : AppCompatActivity() {
 
@@ -154,11 +157,16 @@ class ViewEventsActivity : AppCompatActivity() {
                     if (docIncidente != null && idDocIncidente != null) {
                         val titulo = docIncidente["titulo"] as? String ?: ""
                         val descricao = docIncidente["descricao"] as? String ?: ""
-                        val imagePath = R.drawable.projetor
+                        val imageBase64 = docIncidente["imageBase64"] as? String
+                        val bitmap = if (imageBase64 != null) base64ToBitmap(imageBase64) else null
 
                         incidentes.add(
                             Event(
-                                idDocIncidente, titulo, descricao, imagePath
+                                idDocIncidente, // docId
+                                titulo,         // title
+                                descricao,      // description
+                                R.drawable.projetor, // imageResId (imagem padrão)
+                                bitmap          // imageBitmap
                             )
                         )
                     }
@@ -169,5 +177,10 @@ class ViewEventsActivity : AppCompatActivity() {
                 tvTotal.text = "Total: ${incidentes.size} Events"
             }
         }
+    }
+
+    private fun base64ToBitmap(base64String: String): Bitmap {
+        val decodedBytes = android.util.Base64.decode(base64String, android.util.Base64.DEFAULT)
+        return android.graphics.BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
     }
 }
