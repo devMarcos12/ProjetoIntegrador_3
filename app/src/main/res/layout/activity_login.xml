@@ -67,6 +67,18 @@
             android:background="@android:drawable/editbox_background"
             android:layout_marginBottom="20dp" />
 
+        <!-- Texto "Forgot Password" -->
+        <TextView
+            android:id="@+id/tvForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forgot_password"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"/>
+
         <!-- Botão Login -->
         <Button
             android:id="@+id/btnLogin"

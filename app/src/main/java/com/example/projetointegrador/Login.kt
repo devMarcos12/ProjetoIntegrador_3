@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -25,6 +26,7 @@ class Login : AppCompatActivity() {
         val passwordField = findViewById<EditText>(R.id.etPassword)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val btnSignUp = findViewById<Button>(R.id.btnSignUp)
+        val forgotPasswordTextView = findViewById<TextView>(R.id.tvForgotPassword)
 
         btnLogin.setOnClickListener {
             val email = emailField.text.toString().trim()
@@ -49,6 +51,11 @@ class Login : AppCompatActivity() {
 
         btnSignUp.setOnClickListener {
             startActivity(Intent(this, Cadastro::class.java))
+        }
+
+        // Lógica para redirecionar para a tela de redefinição de senha
+        forgotPasswordTextView.setOnClickListener {
+            startActivity(Intent(this, ResetPasswordActivity::class.java))
         }
     }
 }
