@@ -6,23 +6,28 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import android.util.Base64
-import java.io.ByteArrayOutputStream
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
 import java.util.*
-
 
 class Register_Incident : AppCompatActivity() {
 
@@ -36,6 +41,10 @@ class Register_Incident : AppCompatActivity() {
     private var selectedImageUri: String? = null
     private var imageBitmap: Bitmap? = null
     private var currentLocation: Location? = null
+
+    // Novas variáveis para foto em alta resolução
+    private var photoFile: File? = null
+    private var photoUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,8 +82,7 @@ class Register_Incident : AppCompatActivity() {
         builder.setItems(options) { _, which ->
             when (which) {
                 0 -> {
-                    val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                    startActivityForResult(takePictureIntent, TAKE_PHOTO)
+                    dispatchTakePictureIntent()
                 }
                 1 -> {
                     val pickPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -83,6 +91,39 @@ class Register_Incident : AppCompatActivity() {
             }
         }
         builder.show()
+    }
+
+    // Cria o arquivo temporário para a foto
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir      /* directory */
+        )
+    }
+
+    // Dispara o intent da câmera com o FileProvider
+    private fun dispatchTakePictureIntent() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (takePictureIntent.resolveActivity(packageManager) != null) {
+            try {
+                photoFile = createImageFile()
+                photoFile?.also {
+                    photoUri = FileProvider.getUriForFile(
+                        this,
+                        "${applicationContext.packageName}.fileprovider",
+                        it
+                    )
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+                    startActivityForResult(takePictureIntent, TAKE_PHOTO)
+                }
+            } catch (ex: IOException) {
+                Toast.makeText(this, "Erro ao criar arquivo de imagem", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -97,14 +138,15 @@ class Register_Incident : AppCompatActivity() {
                     val inputStream = contentResolver.openInputStream(uri!!)
                     val bitmap = BitmapFactory.decodeStream(inputStream)
                     imageBitmap = bitmap
-                    selectedImageUri = bitmapToBase64(bitmap) // Converte para Base64
+                    selectedImageUri = bitmapToBase64(resizeBitmap(bitmap, 1024)) // Redimensiona antes de converter
                     btnUpload.text = "Image Selected"
                 }
                 TAKE_PHOTO -> {
-                    val bitmap = data?.extras?.get("data") as? Bitmap
-                    if (bitmap != null) {
+                    // Lê a imagem do arquivo salvo
+                    photoFile?.let {
+                        val bitmap = BitmapFactory.decodeFile(it.absolutePath)
                         imageBitmap = bitmap
-                        selectedImageUri = bitmapToBase64(bitmap) // Converte para Base64
+                        selectedImageUri = bitmapToBase64(resizeBitmap(bitmap, 1024)) // Redimensiona antes de converter
                         btnUpload.text = "Image Selected"
                     }
                 }
@@ -112,9 +154,21 @@ class Register_Incident : AppCompatActivity() {
         }
     }
 
+    // Redimensiona o bitmap para evitar imagens muito grandes
+    private fun resizeBitmap(bitmap: Bitmap, maxSize: Int): Bitmap {
+        val width = bitmap.width
+        val height = bitmap.height
+        val bitmapRatio = width.toFloat() / height.toFloat()
+        return if (bitmapRatio > 1) {
+            Bitmap.createScaledBitmap(bitmap, maxSize, (maxSize / bitmapRatio).toInt(), true)
+        } else {
+            Bitmap.createScaledBitmap(bitmap, (maxSize * bitmapRatio).toInt(), maxSize, true)
+        }
+    }
+
     private fun bitmapToBase64(bitmap: Bitmap): String {
         val byteArrayOutputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream) // 80 para reduzir tamanho
         val byteArray = byteArrayOutputStream.toByteArray()
         return Base64.encodeToString(byteArray, Base64.DEFAULT)
     }
@@ -125,7 +179,7 @@ class Register_Incident : AppCompatActivity() {
                 android.Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // Solicita a localização do Ususario quando entra na página
+            // Solicita a localização do Usuário quando entra na página
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
@@ -203,6 +257,8 @@ class Register_Incident : AppCompatActivity() {
         findViewById<Button>(R.id.btnUploadFile).text = "Click to Upload"
         selectedImageUri = null
         imageBitmap = null
+        photoFile = null
+        photoUri = null
     }
 
     override fun onRequestPermissionsResult(
